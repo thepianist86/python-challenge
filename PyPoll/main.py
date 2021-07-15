@@ -24,14 +24,14 @@ with open(fpath) as ed_csv:
 
 # calculate total number of votes cast
     tot_votes = len(ed_candidate_col)
-    print(tot_votes)
+    #print(tot_votes)
 
 # list of candidates who received votes
 
     for r in ed_candidate_col:
         if r not in candidate_list:
             candidate_list.append(r)
-    print(candidate_list)
+    #print(candidate_list)
 
 
 # assign total number of votes each candidate won
@@ -44,18 +44,18 @@ with open(fpath) as ed_csv:
         c_indx += 1
         vote_count[c] = counter
         counter = 0
-    print(vote_count)
+    #print(vote_count)
 
 # assign total percentage of votes each candidate won
     for c in candidate_list:
         vote_percent[c] = vote_count[c]/tot_votes
-    print(vote_percent)
+    #print(vote_percent)
 
 # winner based on popular vote
     most_votes = (max(vote_count.values()))
     pop_vote_win = (list(vote_count.keys()))[list(vote_count.values()).index(most_votes)]
-    print(most_votes)
-    print(pop_vote_win)
+    #print(most_votes)
+    #print(pop_vote_win)
 
 # print analysis to terminal and text file
 
