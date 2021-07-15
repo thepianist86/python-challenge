@@ -1,7 +1,6 @@
 # import budget data
 import os
 import csv
-from operator import itemgetter
 
 
 fpath = os.path.join("Resources", "budget_data.csv")
@@ -18,17 +17,17 @@ greatest_dec = {}
 
 with open(fpath) as bd_csv:
     bd_reader = csv.reader(bd_csv, delimiter=",")
+    bd_header = next(bd_reader)
     for r in bd_reader:
         bd_rows[r[0]] = r[1]
 
 # The total number of months included in the dataset
-    months = len(list(bd_rows)) - 1
+    months = len(list(bd_rows))
     #print (f"{months}")
 
 # The net total amount of "Profit/Losses" over the entire period
     bd_csv.seek(0)
     next(bd_reader)
-
     net_tot_amt = sum(int(r[1]) for r in bd_reader)
     #print(net_tot_amt)
 
@@ -47,18 +46,21 @@ with open(fpath) as bd_csv:
             first = second
         count += 1
     aver_change = round(change_tot/(months-1), 2)
+    #print(list(change_list.values()))
     #print(aver_change)
 
 # The greatest increase in profits (date and amount) over the entire period
-    amount = max(change_list.items(), key=itemgetter(1))
+    amount = max(change_list.values())
+    amount_idx = (list(change_list.keys()))[list(change_list.values()).index(amount)]
     date = list(bd_rows)
-    greatest_inc[date[amount[0]+1]] = amount[1]
+    greatest_inc[date[amount_idx]] = amount
     #print(greatest_inc)
 
 # The greatest decrease in profits (date and amount) over the entire period
-    amount = min(change_list.items(), key=itemgetter(1))
+    amount = min(change_list.values())
+    amount_idx = (list(change_list.keys()))[list(change_list.values()).index(amount)]
     date = list(bd_rows)
-    greatest_dec[date[amount[0]+1]] = amount[1]
+    greatest_dec[date[amount_idx]] = amount
     #print(greatest_dec)
 
 print("Financial Analysis")
@@ -78,3 +80,4 @@ for key,value in greatest_inc.items():
 for key,value in greatest_dec.items():
     f.write(f"Greatest Decrease in Profits: {key} (${value})\n")
 f.close()
+

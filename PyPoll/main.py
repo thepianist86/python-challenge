@@ -18,7 +18,7 @@ vote_percent = {}
 # open and read information
 with open(fpath) as ed_csv:
     ed_reader = csv.reader(ed_csv, delimiter=",")
-    next(ed_reader, None)
+    ed_header = next(ed_reader)
     for r in ed_reader:
         ed_candidate_col.append(r[2])
 
